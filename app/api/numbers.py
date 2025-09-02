@@ -4,7 +4,8 @@ from pydantic import conlist
 
 from app.models.numbers import NumbersResponse, ComparisonResponse, MathFunctionsResponse, \
     RandomResponse, TwoNumbersResponse, TwoNumbersRequest, MultipleNumbersResponse, MultipleNumbersRequest, \
-    SingleNumberResponse, SingleNumberRequest
+    SingleNumberResponse, SingleNumberRequest, ComplexNumbersResponse, ComplexNumbersRequest, LogarithmResponse, \
+    LogarithmRequest, ExponentiationResponse, ModulusResponse
 from app.services.numbers_service import NumbersService
 
 router = APIRouter(prefix="/numbers", tags=["Numbers"])
@@ -72,3 +73,31 @@ async def two_numbers(request: TwoNumbersRequest) -> TwoNumbersResponse:
 async def multiple_numbers(request: MultipleNumbersRequest) -> MultipleNumbersResponse:
     numbers = request.numbers
     return numbers_service.multiple_numbers(numbers)
+
+
+# ---------- Modulus ----------
+@router.post("/modulus", response_model=ModulusResponse, summary="Modulus of two numbers")
+async def modulus(request: TwoNumbersRequest) -> ModulusResponse:
+    a, b = request.a, request.b
+    return numbers_service.modulus(a, b)
+
+
+# ---------- Exponentiation ----------
+@router.post("/exponent", response_model=ExponentiationResponse, summary="Exponentiation (a^b)")
+async def exponent(request: TwoNumbersRequest) -> ExponentiationResponse:
+    a, b = request.a, request.b
+    return numbers_service.exponent(a, b)
+
+
+# ---------- Logarithms ----------
+@router.post("/logarithm", response_model=LogarithmResponse, summary="Logarithm of a number")
+async def logarithm(request: LogarithmRequest) -> LogarithmResponse:
+    n, base = request.number, request.base
+    return numbers_service.logarithm(n, base)
+
+
+# ---------- Complex numbers ----------
+@router.post("/complex", response_model=ComplexNumbersResponse, summary="Operations on a complex number")
+async def complex_numbers(request: ComplexNumbersRequest) -> ComplexNumbersResponse:
+    z = complex(request.real, request.imag)
+    return numbers_service.complex_numbers(z)

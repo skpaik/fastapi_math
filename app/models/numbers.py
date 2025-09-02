@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field, conlist
 
@@ -108,3 +108,46 @@ class MultipleNumbersResponse(BaseModel):
     min: int
     max: int
     product: int
+
+
+# ---------- Modulus & Exponentiation ----------
+class TwoNumbersRequest(BaseModel):
+    a: int
+    b: int
+
+
+class ModulusResponse(BaseModel):
+    a: int
+    b: int
+    modulus: Optional[int]
+
+
+class ExponentiationResponse(BaseModel):
+    a: int
+    b: int
+    result: int
+
+
+# ---------- Logarithms ----------
+class LogarithmRequest(BaseModel):
+    number: float
+    base: Optional[float] = None  # default = natural log
+
+
+class LogarithmResponse(BaseModel):
+    input: float
+    base: Optional[float]
+    result: float
+
+
+# ---------- Complex numbers ----------
+class ComplexNumbersRequest(BaseModel):
+    real: float
+    imag: float
+
+
+class ComplexNumbersResponse(BaseModel):
+    input: complex
+    conjugate: complex
+    magnitude: float
+    phase: float

@@ -1,9 +1,11 @@
 import math
+import cmath  # for complex numbers
 import random
 import statistics
 
 from app.models.numbers import NumbersResponse, ComparisonResponse, MathFunctionsResponse, RandomResponse, \
-    SingleNumberResponse, TwoNumbersResponse, MultipleNumbersResponse
+    SingleNumberResponse, TwoNumbersResponse, MultipleNumbersResponse, ModulusResponse, ExponentiationResponse, \
+    LogarithmResponse, ComplexNumbersResponse
 
 
 class NumbersService:
@@ -89,4 +91,32 @@ class NumbersService:
             min=min(numbers),
             max=max(numbers),
             product=product
+        )
+
+    def modulus(self, a, b) -> ModulusResponse:
+        return ModulusResponse(
+            a=a,
+            b=b,
+            modulus=a % b if b != 0 else None
+        )
+
+    def exponent(self, a, b) -> ExponentiationResponse:
+        return ExponentiationResponse(a=a, b=b, result=a ** b)
+
+    def logarithm(self, n, base) -> LogarithmResponse:
+        if n <= 0:
+            result = float("nan")
+        elif base is None:
+            result = math.log(n)  # natural log
+        else:
+            result = math.log(n, base)
+
+        return LogarithmResponse(input=n, base=base, result=result)
+
+    def complex_numbers(self, z) -> ComplexNumbersResponse:
+        return ComplexNumbersResponse(
+            input=z,
+            conjugate=z.conjugate(),
+            magnitude=abs(z),
+            phase=cmath.phase(z)
         )
