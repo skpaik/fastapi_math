@@ -1,9 +1,19 @@
 from typing import List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, conlist
 
 
 class NumbersResponse(BaseModel):
+    input: List[int]
+    sum: int
+    product: int
+    min: int
+    max: int
+    average: float
+
+
+class NumbersResponse(BaseModel):
+    input: List[int]
     total_sum: int = Field(..., example=20)
     even_sum: int = Field(..., example=6)
     odd_sum: int = Field(..., example=14)
@@ -18,6 +28,7 @@ class NumbersResponse(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
+                "input": [1, 2, 6, 9],
                 "total_sum": 20,
                 "even_sum": 6,
                 "odd_sum": 14,
@@ -30,3 +41,27 @@ class NumbersResponse(BaseModel):
                 "count": 7,
             }
         }
+
+
+class NumbersRequest(BaseModel):
+    numbers: conlist(int, min_length=1)
+
+
+class ComparisonResponse(BaseModel):
+    input: List[int]
+    greater_than_zero: List[int]
+    even_numbers: List[int]
+    odd_numbers: List[int]
+
+
+class MathFunctionsResponse(BaseModel):
+    input: List[int]
+    square_roots: List[float]
+    squares: List[int]
+    ceilings: List[int]
+    floors: List[int]
+
+
+class RandomResponse(BaseModel):
+    random_int: int
+    random_float: float
