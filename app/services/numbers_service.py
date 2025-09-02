@@ -2,7 +2,8 @@ import math
 import random
 import statistics
 
-from app.models.numbers import NumbersResponse, ComparisonResponse, MathFunctionsResponse, RandomResponse
+from app.models.numbers import NumbersResponse, ComparisonResponse, MathFunctionsResponse, RandomResponse, \
+    SingleNumberResponse, TwoNumbersResponse, MultipleNumbersResponse
 
 
 class NumbersService:
@@ -52,4 +53,40 @@ class NumbersService:
         return RandomResponse(
             random_int=random.randint(1, 100),
             random_float=random.random()
+        )
+
+    def single_number(self, n) -> SingleNumberResponse:
+        return SingleNumberResponse(
+            input=n,
+            square=n ** 2,
+            cube=n ** 3,
+            sqrt=math.sqrt(n) if n >= 0 else float("nan")
+        )
+
+    def two_numbers(self, a, b) -> TwoNumbersResponse:
+        return TwoNumbersResponse(
+            a=a,
+            b=b,
+            sum=a + b,
+            difference=a - b,
+            product=a * b,
+            quotient=a / b if b != 0 else float("inf"),
+            modulus=a % b if b != 0 else None,
+            power=a ** b
+        )
+
+    def multiple_numbers(self, numbers) -> MultipleNumbersResponse:
+        total = sum(numbers)
+        product = 1
+
+        for n in numbers:
+            product *= n
+
+        return MultipleNumbersResponse(
+            input=numbers,
+            sum=total,
+            average=total / len(numbers),
+            min=min(numbers),
+            max=max(numbers),
+            product=product
         )

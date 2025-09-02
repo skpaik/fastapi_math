@@ -65,3 +65,46 @@ class MathFunctionsResponse(BaseModel):
 class RandomResponse(BaseModel):
     random_int: int
     random_float: float
+
+
+# ---------- Single input ----------
+class SingleNumberRequest(BaseModel):
+    number: int
+
+
+class SingleNumberResponse(BaseModel):
+    input: int
+    square: int
+    cube: int
+    sqrt: float
+
+
+# ---------- Two inputs ----------
+class TwoNumbersRequest(BaseModel):
+    a: int
+    b: int
+
+
+class TwoNumbersResponse(BaseModel):
+    a: int
+    b: int
+    sum: int
+    difference: int
+    product: int
+    quotient: float
+    modulus: int
+    power: int
+
+
+# ---------- Multiple inputs ----------
+class MultipleNumbersRequest(BaseModel):
+    numbers: conlist(int, min_length=1)
+
+
+class MultipleNumbersResponse(BaseModel):
+    input: List[int]
+    sum: int
+    average: float
+    min: int
+    max: int
+    product: int

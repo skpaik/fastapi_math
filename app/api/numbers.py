@@ -3,7 +3,8 @@ from fastapi.routing import APIRouter
 from pydantic import conlist
 
 from app.models.numbers import NumbersResponse, ComparisonResponse, MathFunctionsResponse, \
-    RandomResponse
+    RandomResponse, TwoNumbersResponse, TwoNumbersRequest, MultipleNumbersResponse, MultipleNumbersRequest, \
+    SingleNumberResponse, SingleNumberRequest
 from app.services.numbers_service import NumbersService
 
 router = APIRouter(prefix="/numbers", tags=["Numbers"])
@@ -49,3 +50,25 @@ async def math_functions(
             summary="Generate random numbers")
 async def random_numbers():
     return numbers_service.random_numbers()
+
+
+# ---------- Single input ----------
+@router.post("/single", response_model=SingleNumberResponse, summary="Operations on a single number")
+async def single_number(request: SingleNumberRequest) -> SingleNumberResponse:
+    n = request.number
+    return numbers_service.single_number(n)
+
+
+# ---------- Two inputs ----------
+@router.post("/double", response_model=TwoNumbersResponse, summary="Operations on two numbers")
+async def two_numbers(request: TwoNumbersRequest) -> TwoNumbersResponse:
+    a, b = request.a, request.b
+
+    return numbers_service.two_numbers(a, b)
+
+
+# ---------- Multiple inputs ----------
+@router.post("/multiple", response_model=MultipleNumbersResponse, summary="Operations on multiple numbers")
+async def multiple_numbers(request: MultipleNumbersRequest) -> MultipleNumbersResponse:
+    numbers = request.numbers
+    return numbers_service.multiple_numbers(numbers)
