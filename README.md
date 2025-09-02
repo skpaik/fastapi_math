@@ -58,4 +58,9 @@ cd <your-repo-name>
 ```
 
 
-Open the URL in browser
+Open the [URL](http://127.0.0.1:8000/docs) in browser 
+
+---
+
+## OPEN API UI
+![UI OpenAPI](UI_OpenAPI.png "UI_OpenAPI")
