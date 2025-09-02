@@ -54,50 +54,71 @@ async def random_numbers():
 
 
 # ---------- Single input ----------
-@router.post("/single", response_model=SingleNumberResponse, summary="Operations on a single number")
-async def single_number(request: SingleNumberRequest) -> SingleNumberResponse:
+@router.post("/single",
+             response_model=SingleNumberResponse,
+             summary="Operations on a single number")
+async def single_number(
+        request: SingleNumberRequest = Body(..., example={"number": 9})) -> SingleNumberResponse:
     n = request.number
     return numbers_service.single_number(n)
 
 
 # ---------- Two inputs ----------
-@router.post("/double", response_model=TwoNumbersResponse, summary="Operations on two numbers")
-async def two_numbers(request: TwoNumbersRequest) -> TwoNumbersResponse:
+@router.post("/double",
+             response_model=TwoNumbersResponse,
+             summary="Operations on two numbers")
+async def two_numbers(
+        request: TwoNumbersRequest = Body(..., example={"a": 10, "b": 3})) -> TwoNumbersResponse:
     a, b = request.a, request.b
 
     return numbers_service.two_numbers(a, b)
 
 
 # ---------- Multiple inputs ----------
-@router.post("/multiple", response_model=MultipleNumbersResponse, summary="Operations on multiple numbers")
-async def multiple_numbers(request: MultipleNumbersRequest) -> MultipleNumbersResponse:
+@router.post("/multiple",
+             response_model=MultipleNumbersResponse,
+             summary="Operations on multiple numbers")
+async def multiple_numbers(
+        request: MultipleNumbersRequest = Body(..., example={"numbers": [2, 4, 6]})) -> MultipleNumbersResponse:
     numbers = request.numbers
     return numbers_service.multiple_numbers(numbers)
 
 
 # ---------- Modulus ----------
-@router.post("/modulus", response_model=ModulusResponse, summary="Modulus of two numbers")
-async def modulus(request: TwoNumbersRequest) -> ModulusResponse:
+@router.post("/modulus",
+             response_model=ModulusResponse,
+             summary="Modulus of two numbers")
+async def modulus(
+        request: TwoNumbersRequest = Body(..., example={"a": 10, "b": 3})) -> ModulusResponse:
     a, b = request.a, request.b
     return numbers_service.modulus(a, b)
 
 
 # ---------- Exponentiation ----------
-@router.post("/exponent", response_model=ExponentiationResponse, summary="Exponentiation (a^b)")
-async def exponent(request: TwoNumbersRequest) -> ExponentiationResponse:
+@router.post("/exponent",
+             response_model=ExponentiationResponse,
+             summary="Exponentiation (a^b)")
+async def exponent(
+        request: TwoNumbersRequest = Body(..., example={"a": 2, "b": 8})) -> ExponentiationResponse:
     a, b = request.a, request.b
     return numbers_service.exponent(a, b)
 
 
 # ---------- Logarithms ----------
-@router.post("/logarithm", response_model=LogarithmResponse, summary="Logarithm of a number")
-async def logarithm(request: LogarithmRequest) -> LogarithmResponse:
+@router.post("/logarithm",
+             response_model=LogarithmResponse,
+             summary="Logarithm of a number")
+async def logarithm(
+        request: LogarithmRequest = Body(..., example={"number": 100, "base": 10})) -> LogarithmResponse:
     n, base = request.number, request.base
     return numbers_service.logarithm(n, base)
 
 
 # ---------- Complex numbers ----------
-@router.post("/complex", response_model=ComplexNumbersResponse, summary="Operations on a complex number")
-async def complex_numbers(request: ComplexNumbersRequest) -> ComplexNumbersResponse:
+@router.post("/complex",
+             response_model=ComplexNumbersResponse,
+             summary="Operations on a complex number")
+async def complex_numbers(
+        request: ComplexNumbersRequest = Body(..., example={"real": 3, "imag": 4})) -> ComplexNumbersResponse:
     z = complex(request.real, request.imag)
     return numbers_service.complex_numbers(z)
